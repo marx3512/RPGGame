@@ -3,15 +3,9 @@ using UnityEngine.AI;
 
 public class Move : MonoBehaviour
 {
-    
-
-    Ray lastRay;
-
     private void Update() {
-        
-
         if(Input.GetMouseButtonDown(0)) MoveToCursor();
-        Debug.DrawRay(lastRay.origin, lastRay.direction * 100);
+        UpdateAnimator();
     }
 
     void MoveToCursor(){
@@ -19,5 +13,12 @@ public class Move : MonoBehaviour
         RaycastHit hit;
         bool hasHit = Physics.Raycast(ray,out hit);
         if(hasHit) this.GetComponent<NavMeshAgent>().destination = hit.point;
+    }
+
+    private void UpdateAnimator(){
+        Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float speed = localVelocity.z;
+        GetComponent<Animator>().SetFloat("Velocity",speed);
     }
 }
