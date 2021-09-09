@@ -4,15 +4,15 @@ using UnityEngine.AI;
 public class Move : MonoBehaviour
 {
     private void Update() {
-        if(Input.GetMouseButtonDown(0)) MoveToCursor();
+        
         UpdateAnimator();
     }
 
-    void MoveToCursor(){
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray,out hit);
-        if(hasHit) this.GetComponent<NavMeshAgent>().destination = hit.point;
+    
+
+    public void MoveTo(Vector3 destination)
+    {
+        this.GetComponent<NavMeshAgent>().destination = destination;
     }
 
     private void UpdateAnimator(){
